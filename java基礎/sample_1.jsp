@@ -1,7 +1,7 @@
 <%-- 
     Document   : sample_1.jsp
     Created on : 2016/07/05, 18:44:08
-    Author     : takuyamuroyama
+    Author     : ta9muro
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,15 +26,14 @@
         
         
         // 定数作成 → 型 変数名 = 初期値;
-        String message = "Hello Takuya!";
+        String message = "Hello github-chan!";
         // 代入
-        message = "See you again,Takuya!";
-        // See you again,Takuya!を表示
+        message = "See you again,github-chan!";
         out.println(message);
         
         
         // 定数作成 → final 型 定数名 = 固定値;
-        final String MSG = "Good night, Takuya!";
+        final String MSG = "Good night, github-chan!";
 
         out.println(MSG);
         
@@ -55,8 +54,7 @@
         int amari = 65 % 11; //余り
         
         int num1,num2,num3,num4 = 10;
-        // 時間がないのでのばす
-        
+
 
         // 条件分岐
         int param = 1;
@@ -152,7 +150,8 @@
             String count = request.getParameter("count");
             //typeで文字列
             
-            Integer t = Integer.valueOf(type);//itemsという文字列は数値に変換できないので、クエリストリングではtype=1 or 2 or 3
+            //itemsという文字列は数値に変換できないので、クエリストリングではtype=1 or 2 or 3
+            Integer t = Integer.valueOf(type);
             Integer goukei = Integer.valueOf(total);
             Integer kosu = Integer.valueOf(count);
             //tで文字列から数字列に変換うつす
@@ -172,7 +171,7 @@
             out.println(goukei + "yen"); //総額
             out.println(goukei/kosu + "yen"); //1個あたりの値段
             
-            //応用問題3 構文はあってるようにみえます
+            //応用問題3
             if (goukei>=3500){
                   out.print(goukei*0.04 + "points");
             }
@@ -180,21 +179,6 @@
                   out.print(goukei*0.05 + "points");
             }
 
-            // 細かい話ですが、ポイントを計算してもらえると嬉しいです。3000円→120ポイントみたいな 3000*0.4
-            
-            //out.println(count);
-            //③は、総額だけで処理できますね。総額から、ポイントがいくつつくのか計算すればOKなので
-            //あとは基礎２の応用で基礎編は一応、、、クリアになる
-            //昨日のなんだっけツリーなんとかのメールアドレス登録結局メールきていないので
-            //この後再度タメします
-            //Githubへ課題提出アップしたいので。
-            //もし、だめなら、明日一緒にセットアップしましょうか。
-            
-
-
-         
-          //名前は辻よしふみ
-        
           
         %>
     </body>
