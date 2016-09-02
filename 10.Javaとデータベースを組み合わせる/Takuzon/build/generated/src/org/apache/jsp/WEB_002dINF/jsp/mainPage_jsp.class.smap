@@ -1,0 +1,10 @@
+SMAP
+mainPage_jsp.java
+JSP
+*S JSP
+*F
++ 0 mainPage.jsp
+WEB-INF/jsp/mainPage.jsp
+*L
+5,24:44
+*E
