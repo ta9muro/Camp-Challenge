@@ -21,7 +21,7 @@
                 <th>登録日時</th>
             </tr>
             <tr>
-                <td><a href="ResultDetail?name=<%= udd.getName()%> &year=<%= udd.getBirthday()%> &type=<%= udd.getType()%>"></a></td>
+                <td><a href="ResultDetail?id=<%= udd.getUserID()%>"><%= udd.getName()%></a></td>
                 <td><%= udd.getBirthday()%></td>
                 <td><%= udd.getType()%></td>
                 <td><%= udd.getNewDate()%></td>
