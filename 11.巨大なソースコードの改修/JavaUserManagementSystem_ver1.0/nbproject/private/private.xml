@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/web/error.jsp</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/web/insertconfirm.jsp</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/src/java/jums/UserDataBeans2.java</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/web/insert.jsp</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/src/java/jums/InsertConfirm.java</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/src/java/jums/UserDataDTO.java</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/src/java/jums/InsertResult.java</file>
+            <file>file:/Users/takuyamuroyama/Desktop/巨大なソースの修正/src/java/jums/UserDataDAO.java</file>
+        </group>
     </open-files>
 </project-private>

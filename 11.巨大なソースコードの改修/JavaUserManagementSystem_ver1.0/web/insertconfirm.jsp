@@ -1,9 +1,12 @@
+
 <%@page import="javax.servlet.http.HttpSession" %>
 <%
     HttpSession hs = request.getSession();
 %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.text.*" %>
 <%@ page import="jums.JumsHelper"%>
+<%@ page import="jums.UserDataBeans2"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,44 +14,55 @@
         <title>JUMS登録確認画面</title>
     </head>
     <body>
-        <% String errorMsg = "";%>
         
-        <%if(hs.getAttribute("name").equals("")){
-        errorMsg+= "名前が記入されていません。" + "<br>";
-        } %>
-        
-        <%if(hs.getAttribute("year").equals("") || hs.getAttribute("month").equals("") || hs.getAttribute("day").equals("")){
-        errorMsg+= "生年月日が記入されていません。" + "<br>";
-        } %>
-        
-        <%if(hs.getAttribute("type") == null){
-        errorMsg+= "識別が記入されていません。" + "<br>";
-        } %>
-        
-        
-        <%if(hs.getAttribute("tell").equals("")){
-        errorMsg+= "電話番号が記入されていません。" + "<br>";
-        } %>
-        
-        <%if(hs.getAttribute("comment").equals("")){
-        errorMsg+= "自己紹介が記入されていません。"  + "<br>";
-        } %>
+        <%
+            //セッションスコープから登録情報を取得
+            UserDataBeans2 userInfo = (UserDataBeans2)session.getAttribute("udb");
             
-        <%if(errorMsg.length() != 0){
-         out.println(errorMsg);   
-        }%>
+            String errorMsg2 = "";
+            
+            if(userInfo.getName().equals("")){
+                errorMsg2 += "【JavaBeans使用】名前が記入されていません。" + "<br>";
+            }
+            
+            if(userInfo.getBirthday() == null){
+                errorMsg2 += "【JavaBeans使用】生年月日が記入されていません。" + "<br>";
+            }
+            
+            if(userInfo.getType() == 0){
+                errorMsg2 += "【JavaBeans使用】種別が記入されていません。" + "<br>";
+                //int型の場合は初期値を代入していない場合、デフォルトは0になる
+            }
+            
+            if(userInfo.getTell().equals("")){
+                errorMsg2 += "【JavaBeans使用】電話番号が記入されていません。" + "<br>";
+            }
+            
+            if(userInfo.getComment().equals("")){
+                errorMsg2 += "【JavaBeans使用】自己紹介文が記入されていません。" + "<br>";
+            }
+            
+            
+            if(errorMsg2.length() != 0){
+                out.print(errorMsg2);
+            }
+         
+            
+        %>
         
-    <% if((!hs.getAttribute("name").equals("")) && (!hs.getAttribute("year").equals("") && !hs.getAttribute("month").equals("") && !hs.getAttribute("day").equals(""))
-            && (hs.getAttribute("type") != null) && (!hs.getAttribute("tell").equals("")) && (!hs.getAttribute("comment").equals(""))){ %>
+        
+        <% if((!userInfo.getName().equals("")) && (userInfo.getBirthday() != null) && (userInfo.getType() != 0) && (!userInfo.getTell().equals("")) && (!userInfo.getComment().equals(""))){ %>
+        
         <h1>登録確認</h1>
-        名前:<%= hs.getAttribute("name")%><br>
-        生年月日:<%= hs.getAttribute("year")+"年"+hs.getAttribute("month")+"月"+hs.getAttribute("day")+"日"%><br>
-        種別:<%= hs.getAttribute("type")%><br>
-        電話番号:<%= hs.getAttribute("tell")%><br>
-        自己紹介:<%= hs.getAttribute("comment")%><br>
+        名前:<%= userInfo.getName()%><br>
+        生年月日:<%= userInfo.ChangeStringFromDate()%><br>
+        種別:<%= userInfo.getType()%><br>
+        電話番号:<%= userInfo.getTell()%><br> 
+        自己紹介:<%= userInfo.getComment()%><br>
         上記の内容で登録します。よろしいですか？
         <form action="insertresult" method="POST">
             <input type="submit" name="yes" value="はい">
+            <input type="hidden" name="ac" value="<%= hs.getAttribute("ac")%>">
         </form>
         <% } %>
         
@@ -57,10 +71,6 @@
         </form>
         
         <%=JumsHelper.getInstance().home()%>
-        
-        <%
-        //セッションスコープそのものをクリア
-        session.invalidate();
-        %>
+    
     </body>
 </html>

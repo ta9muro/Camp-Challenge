@@ -1,6 +1,10 @@
 package jums;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import javax.servlet.ServletException;
@@ -9,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.*;
+
+import jums.UserDataBeans2;
+import jums.UserDataDTO;
+import java.sql.*;
 
 /**
  * insertresultと対応するサーブレット
@@ -34,23 +42,39 @@ public class InsertResult extends HttpServlet {
         HttpSession session = request.getSession();
         
         try{
-            //ユーザー情報に対応したJavaBeansオブジェクトに格納していく
+            //HttpSession session2 = request.getSession();
+            request.setCharacterEncoding("UTF-8");
+            String accesschk2 = request.getParameter("ac");
+            if(accesschk2 == null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk2)){
+                throw new Exception("不正なアクセスです");
+            }
+             
+            
+            //DTO（Data Table Object）に格納。
+            UserDataBeans2 userInfo = (UserDataBeans2)session.getAttribute("udb");
             UserDataDTO userdata = new UserDataDTO();
-            userdata.setName((String)session.getAttribute("name"));
-            
-            Calendar birthday = Calendar.getInstance();
-            userdata.setBirthday(birthday.getTime());
-            
-            
-            
-            userdata.setType(Integer.parseInt((String)session.getAttribute("type")));
-            userdata.setTell((String)session.getAttribute("tell"));
-            userdata.setComment((String)session.getAttribute("comment"));
+            userdata.setName(userInfo.getName());
+            userdata.setBirthday(userInfo.getBirthday());
+            userdata.setType(userInfo.getType());
+            userdata.setTell(userInfo.getTell());
+            userdata.setComment(userInfo.getComment());
+            //userdata.setName((String)session.getAttribute("name"));
+            //userdata.setBirthday((Date)session.getAttribute("birthday"));
+            //userdata.setType(Integer.parseInt((String)session.getAttribute("type")));
+            //userdata.setTell((String)session.getAttribute("tell"));
+            //userdata.setComment((String)session.getAttribute("comment"));
             
             //DBへデータの挿入
-            UserDataDAO .getInstance().insert(userdata);
+            UserDataDAO.getInstance().insert(userdata);
+            
+            //セッションスコープを削除
+            session.invalidate();
+            //結果表示画面のためのリクエストパラメータとして保存（リクエストパラメータは送信したら勝手に消滅する）
+            UserDataBeans2 udb = new UserDataBeans2();
+            request.setAttribute("udb", udb);
             
             request.getRequestDispatcher("/insertresult.jsp").forward(request, response);
+        
         }catch(Exception e){
             //データ挿入に失敗したらエラーページにエラー文を渡して表示
             request.setAttribute("error", e.getMessage());

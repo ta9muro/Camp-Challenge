@@ -6,11 +6,15 @@ package jums;
  * 基本的にはやりたい1種類の動作に対して1メソッド
  * @author hayashi-s
  */
+
+import java.util.*;
+import jums.UserDataBeans2;
 import base.DBManager;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 public class UserDataDAO {
     
     //インスタンスオブジェクトを返却させてコードの簡略化
@@ -30,7 +34,20 @@ public class UserDataDAO {
             con = DBManager.getConnection();
             st =  con.prepareStatement("INSERT INTO user_t(name,birthday,tell,type,comment,newDate) VALUES(?,?,?,?,?,?)");
             st.setString(1, ud.getName());
-            st.setDate(2, new java.sql.Date(System.currentTimeMillis()));//指定のタイムスタンプ値からSQL格納用のDATE型に変更
+            
+            java.sql.Date sqlDate = new java.sql.Date(ud.getBirthday().getTime());
+            st.setDate(2, sqlDate);
+            
+            //String str = new SimpleDateFormat("yyyy-MM-dd").format(ud.getBirthday());
+            //java.sql.Date sqlDate = java.sql.Date.valueOf(str);
+            //System.out.print(sqlDate);
+            //st.setDate(2, sqlDate);
+
+            //java.util.Date d1 = new java.util.Date();
+            //java.sql.Date d3 = new java.sql.Date(d1.getTime());
+            //st.setDate(2, sqlDate);
+            //System.out.print(sqlDate.toString());
+            
             st.setString(3, ud.getTell());
             st.setInt(4, ud.getType());
             st.setString(5, ud.getComment());
