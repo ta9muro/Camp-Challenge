@@ -137,20 +137,22 @@ public class UserDataBeans implements Serializable{
 
     public void UD2DTOMapping(UserDataDTO udd){
         udd.setName(this.name);
+        //yearとmonthとdayどれか0ではないとき（1つでも数字が入っている場合）
         if(this.year != 0 || this.month != 0 || this.day != 0){
             Calendar birthday = Calendar.getInstance();
+            //yearに数字が入っていてmonthかdayが0であるとき
             if(this.month == 0 || this.day == 0){
                 birthday.set(this.year,0,1);
-            }else{
+            }else{  //全て数字が入っている場合
                 birthday.set(this.year,(this.month)-1,this.day);
             }
             udd.setBirthday(birthday.getTime());
-        }else{
+        }else{ //全て数字が入っていない場合
             udd.setBirthday(null);
         }
         udd.setTell(this.tell);
         udd.setType(this.type);
         udd.setComment(this.comment);
-    }
+        }
     
 }

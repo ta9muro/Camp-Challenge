@@ -3,10 +3,13 @@ package jums;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+//import java.util.;
 
 /**
  *
@@ -38,8 +41,21 @@ public class SearchResult extends HttpServlet {
             UserDataDTO searchData = new UserDataDTO();
             udb.UD2DTOMapping(searchData);
 
-            UserDataDTO resultData = UserDataDAO .getInstance().search(searchData);
-            request.setAttribute("resultData", resultData);
+            ArrayList<UserDataDTO> resultData = UserDataDAO .getInstance().search(searchData);
+            
+            
+            //request.setAttribute("resultData", resultData); //リクエストスコープにインスタンスを保存
+            HttpSession session = request.getSession();
+            //UserDataDTO udd = (UserDataDTO)session.getAttribute("");
+            session.setAttribute("resultData", resultData);
+            
+            /*もしフォームの値がなかったら
+            if(udb.equals("") && udb == null){
+                UserDataDTO outputAllData = UserDataDAO. getInstance().allOutputFromDB(searchData);
+                HttpSession hs = request.getSession();
+                hs.setAttribute("outputAllData", outputAllData);
+            }*/
+             
             
             request.getRequestDispatcher("/searchresult.jsp").forward(request, response);  
         }catch(Exception e){

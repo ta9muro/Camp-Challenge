@@ -6,7 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import jums.UserDataDTO;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author hayashi-s
@@ -27,7 +28,9 @@ public class DeleteResult extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
+            
+
+            /* TODO output your page here. You may use following sample code. 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -37,8 +40,20 @@ public class DeleteResult extends HttpServlet {
             out.println("<h1>Servlet DeleteResult at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {
-            out.close();
+            */
+            
+           HttpSession session = request.getSession(); //セッションスタート
+           
+           request.setCharacterEncoding("UTF-8"); //リクエストパラメータの文字コードをUTF-8に変更
+           
+           UserDataDTO udd = (UserDataDTO)session.getAttribute("resultData");
+           
+           UserDataDAO.getInstance().delete(udd); //DBデータの削除
+           
+           request.getRequestDispatcher("/deleteresult.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

@@ -28,6 +28,10 @@ public class Update extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
+            
+            //out.print("hello?");
+            request.getRequestDispatcher("update.jsp").forward(request, response);
+            /*
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -37,8 +41,18 @@ public class Update extends HttpServlet {
             out.println("<h1>Servlet Update at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {
-            out.close();
+            */
+            
+            //UserDataDTO updateData = new UserDataDTO();
+            //udd.setName(request.getParameter());
+            
+                        
+            
+            
+        } catch(Exception e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            //out.close();
         }
     }
 

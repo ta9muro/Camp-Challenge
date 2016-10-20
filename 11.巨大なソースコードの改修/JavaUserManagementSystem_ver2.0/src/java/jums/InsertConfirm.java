@@ -46,7 +46,7 @@ public class InsertConfirm extends HttpServlet {
             udb.setMonth(request.getParameter("month"));
             udb.setDay(request.getParameter("day"));
             udb.setType(request.getParameter("type"));
-            udb.setTell(request.getParameter("tell"));
+            udb.setTell(request.getParameter("tell"));  
             udb.setComment(request.getParameter("comment"));
 
             //ユーザー情報群をセッションに格納

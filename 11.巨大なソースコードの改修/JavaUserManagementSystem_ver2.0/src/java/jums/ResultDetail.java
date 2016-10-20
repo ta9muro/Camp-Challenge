@@ -2,15 +2,18 @@ package jums;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import jums.UserDataDTO;
+import javax.servlet.http.HttpSession; 
 /**
  *
  * @author hayashi-s
  */
+
 public class ResultDetail extends HttpServlet {
 
     /**
@@ -29,10 +32,16 @@ public class ResultDetail extends HttpServlet {
 
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
-            searchData.setUserID(2);
-
+            HttpSession session = request.getSession();
+            
+            ArrayList<UserDataDTO> udd = (ArrayList<UserDataDTO>)session.getAttribute("resultData");
+            for(UserDataDTO u: udd){
+                searchData.setUserID(u.getUserID());
+            }
+            
             UserDataDTO resultData = UserDataDAO .getInstance().searchByID(searchData);
-            request.setAttribute("resultData", resultData);
+            //request.setAttribute("resultData", resultData);
+            session.setAttribute("resultData", resultData);
             
             request.getRequestDispatcher("/resultdetail.jsp").forward(request, response);  
         }catch(Exception e){

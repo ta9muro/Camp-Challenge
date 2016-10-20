@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Delete extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
+            /* TODO output your page here. You may use following sample code. 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -37,6 +38,8 @@ public class Delete extends HttpServlet {
             out.println("<h1>Servlet Delete at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            */
+            request.getRequestDispatcher("/delete.jsp").forward(request, response);
         } finally {
             out.close();
         }
