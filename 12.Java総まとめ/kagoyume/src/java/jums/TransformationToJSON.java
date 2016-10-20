@@ -41,10 +41,10 @@ public static ArrayList<UserData> getJsonNode(String url) throws Exception{
         
         for(int i=0; i<20; i++){  
             UserData ud = new UserData();
-            ud.setProductName((itemTree.get(i).get(".Name")).textValue()); //商品名
-            ud.setPrice((itemTree.get(i).get(".Price._value")).textValue()); //価格
-            ud.setProductPic((itemTree.get(i).get(".Store.Image.Medium")).textValue());
-            ud.setProductPic((itemTree.get(i).get(".Store.Image.Medium")).textValue());
+            ud.setProductName((itemTree.get(i).get(".Name")).asText()); //商品名
+            ud.setPrice((itemTree.get(i).get(".Price._value")).asText()); //価格
+            ud.setProductPic((itemTree.get(i).get(".Store.Image.Medium")).asText());
+            ud.setProductPic((itemTree.get(i).get(".Store.Image.Medium")).asText());
             jsonData.add(ud);
         }
         
