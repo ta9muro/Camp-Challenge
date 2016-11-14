@@ -4,6 +4,9 @@
     Author     : takuyamuroyama
 --%>
 
+<%
+    HttpSession hs = request.getSession();
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,10 +16,18 @@
     </head>
     <body>
         <h1>ログイン</h1>
-        <form action="login" method="GET">
+        <form action="loginCheck" method="GET">
         ユーザー名: <input type="text" name="name"><br>
         パスワード: <input type="password" name="password"><br>
-        <input type="submit" value="login">
+        <input type="hidden" name="ac" value="<%=hs.getAttribute("ac")%>">
+        <input type="submit" name="btnsubmit" value="ログイン">
+        </form>
+ 
+        <br>
+        
+        <form action="registration" method="POST">
+            <input type="hidden" name="ac" value="<%=hs.getAttribute("ac")%>">
+            <input type="submit" name="btnsubmit2" value="新規会員登録">
         </form>
     </body>
 </html>

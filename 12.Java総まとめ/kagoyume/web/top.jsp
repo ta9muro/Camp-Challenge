@@ -29,6 +29,6 @@
             <input type="submit" name="btnSubmit" value="検索">
         </form>
         <br>
-        <%=ud.login()%>
+        <%=ud.login()%> 
     </body>
 </html>

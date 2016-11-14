@@ -31,24 +31,33 @@ public class registrationcomplete extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF=8");
         PrintWriter out = response.getWriter();
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
+        
+        //ページ遷移の確認 6=商品購入完了ページ
+        HttpSession hs = request.getSession();
+        hs.setAttribute("pageStatus",6);
         
         try{
-            UserData ud = (UserData)session.getAttribute("ud");
+            request.setCharacterEncoding("UTF-8");
+            
+            //アクセスルートチェック
+            String accesschk = request.getParameter("ac");
+            if(accesschk == null || (Integer)hs.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            
+            UserData ud = (UserData)hs.getAttribute("ud");
             
             //新規会員登録情報をDTOオブジェクトにマッピング。
             UserDataDTO udd = new UserDataDTO();
-            ud.MapingToUDD(udd);
+            ud.MappingToDB(udd);
             
             //DBへインポート
             UserDataDAO.getInstance().insertUser_t(udd);
             
-            //成功したのでセッション削除
-            session.invalidate();
-            
-            String msg = "【DB登録完了】registrationcompleteに遷移しました。";
+            String msg = "【会員登録完了】registrationcompleteに遷移しました。";
             log.getInstance().logData(msg);
             
             //登録完了画面での表示用にリクエストパラメータとして保持

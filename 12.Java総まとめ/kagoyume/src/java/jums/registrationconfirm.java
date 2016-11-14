@@ -31,27 +31,28 @@ public class registrationconfirm extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
         try{
-            HttpSession session = request.getSession();
-
             //リクエストパラメータの文字コードをUTF-8に変更
             request.setCharacterEncoding("UTF-8");
+            
+            HttpSession hs = request.getSession();
 
-             //あとでアクセスルートチェックを書く
-             UserData ud = new UserData(); //フォームからの入力を取得して、UserDataに格納
-             //String username = request.getParameter("username");
-             ud.setName(request.getParameter("name"));
-             ud.setPassword(request.getParameter("password"));
-             ud.setMail(request.getParameter("mail"));
-             ud.setAddress(request.getParameter("address"));
+            //フォームからの入力を取得して、UserDataに格納
+            UserData ud = new UserData(); 
+            ud.setName(request.getParameter("name"));
+            ud.setPassword(request.getParameter("password"));
+            ud.setMail(request.getParameter("mail"));
+            ud.setAddress(request.getParameter("address"));
              
-             session.setAttribute("ud", ud);
+            hs.setAttribute("ud", ud);
              
-             String msg = "registrationconfirmに遷移しました。";
-             log.getInstance().logData(msg);
-             request.getRequestDispatcher("/registrationconfirm.jsp").forward(request, response);
+            String msg = "registrationconfirmに遷移しました。";
+            log.getInstance().logData(msg);
+             
+            request.getRequestDispatcher("/registrationconfirm.jsp").forward(request, response);
         }catch(Exception e){
             out.println(e.toString());
         }

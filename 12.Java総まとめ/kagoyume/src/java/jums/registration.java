@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,8 +31,26 @@ public class registration extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        
+        try{
+            //セッションスタート
+            HttpSession hs = request.getSession();
             
+            //アクセスルートチェック
+            String accesschk = request.getParameter("ac");
+            
+            if(accesschk == null || (Integer)hs.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            
+            String msg ="会員登録ページへ遷移";
+            log.getInstance().logData(msg);
+            
+            request.getRequestDispatcher("/registration.jsp").forward(request, response);
+        
+        }catch(Exception e){
+            out.println(e.toString());
         }
     }
 

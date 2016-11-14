@@ -35,19 +35,24 @@ public class search extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        PrintWriter out = response.getWriter();
+        //このレスポンスの記述をgetWriterする前にやらないと、文字コードが別認識されてしまう。
+        //必ず、processRequestの頭でやること。
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            
+            //ページ遷移の確認 1=検索ページ
+            HttpSession hs = request.getSession();
+            hs.setAttribute("pageStatus",1);
         
         try{
-            response.setContentType("text/html;charset=UTF-8");
             
-        
-            request.setCharacterEncoding("UTF-8");
-        
+
             //フォームから検索ワードをUserDataに格納
             UserData ud = new UserData();
             String searchwordFromTopPage = request.getParameter("searchword");
             ud.setSearchword(searchwordFromTopPage);
+            hs.setAttribute("searchwordFromTopPage", searchwordFromTopPage);
             
             if(searchwordFromTopPage == null && searchwordFromTopPage.equals("")){
             String errorMsg="検索ワードが未入力です。";
@@ -59,10 +64,12 @@ public class search extends HttpServlet {
             
             //JSONへ変換
             ArrayList<UserData> resultJsonData = TransformationToJSON.getInstance().getJsonNode(url);
+            UserData resultJsonData_2 = TransformationToJSON_2.getInstance().getJsonNode(url);
             
-            HttpSession session = request.getSession();
-            session.setAttribute("resultJsonData", resultJsonData);
-           
+            //HttpSession hs = request.getSession();
+            hs.setAttribute("resultJsonData", resultJsonData); //商品情報
+            hs.setAttribute("resultJsonData_2", resultJsonData_2); //検索ワードと件数
+            
             String msg = "入力した検索ワード: " + searchwordFromTopPage + " searchに遷移しました。";
             log.getInstance().logData(msg);
             

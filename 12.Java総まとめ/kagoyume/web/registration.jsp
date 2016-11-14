@@ -10,6 +10,7 @@
 
 <%
     HttpSession hs = request.getSession();
+    
     UserData ud = null;
     boolean reinput = false;
     if(request.getParameter("mode") != null && request.getParameter("mode").equals("REINPUT")){
@@ -32,6 +33,7 @@
             メールアドレス: <input type="text" name="mail" value="<%if(reinput){out.print(ud.getMail());}%>"><br>
             住所: <input type="text" name="address" value="<%if(reinput){out.print(ud.getAddress());}%>"><br>
             <input type="submit" name="btnSubmit" value="確認画面へ">
+            <input type="hidden" name="ac" value="<%=hs.getAttribute("ac")%>">
         </form>
     </body>
 </html>

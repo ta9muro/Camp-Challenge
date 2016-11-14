@@ -25,9 +25,9 @@
         ユーザー名: <%= ud.getName()%><br>
         パスワード: <%= ud.getPassword()%><br>
         メールアドレス: <%= ud.getMail()%><br>
-        住所: <%=ud.getAddress()%>
-        以上の内容で登録しました。
+        住所: <%=ud.getAddress()%><br>
+        以上の内容で登録しました。<br>
         
-        <a href="top.jsp">トップページへ戻る</a>;
+        <a href="top.jsp">トップページへ戻る</a>
     </body>
 </html>

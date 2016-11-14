@@ -31,22 +31,20 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        response.setContentType("text/html;charset=UTF-8");        
         PrintWriter out = response.getWriter();
-
-        //セッション生成
-        HttpSession session = request.getSession(); 
         
         try{
-            request.setCharacterEncoding("UTF-8");
             
-            UserData ud = new UserData();
-            ud.setName(request.getParameter("name"));
-            ud.setPassword(request.getParameter("password"));
+            //セッションスタート＆アクセスチェックのために乱数生成
+            HttpSession hs = request.getSession();
+            hs.setAttribute("ac", (int)(Math.random()*1000));
             
-            //セッションにログイン情報を格納 これを各画面でログインしているかどうかの処理で使いまわす
-            session.setAttribute("ud", ud);
+            String msg ="会員登録ページへ遷移";
+            log.getInstance().logData(msg);
             
-     
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        
         }catch(Exception e){
             out.println(e.toString());
         }

@@ -3,6 +3,8 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import java.util.ArrayList;
+import jums.UserData;
 
 public final class search_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -44,15 +46,42 @@ public final class search_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
+
+ArrayList<UserData> ud = (ArrayList<UserData>)session.getAttribute("resultJsonData");
+
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>JSP Page</title>\n");
+      out.write("        <title>検索結果画面</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        <h1>Hello World!</h1>\n");
+      out.write("        <h1>検索結果画面</h1>\n");
+      out.write("        <table border=1>\n");
+      out.write("            <tr>\n");
+      out.write("                <th>商品名</th>\n");
+      out.write("                <th>価格</th>\n");
+      out.write("                <th>商品画像</th>\n");
+      out.write("            </tr>\n");
+      out.write("            ");
+ for(UserData u: ud) { 
+      out.write("\n");
+      out.write("            <tr>\n");
+      out.write("                <td>");
+      out.print(u.getProductName());
+      out.write("</td>\n");
+      out.write("            </tr>\n");
+      out.write("            ");
+ } 
+      out.write("\n");
+      out.write("        \n");
+      out.write("        </table>\n");
       out.write("    </body>\n");
+      out.write("    \n");
       out.write("</html>\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
